@@ -100,7 +100,7 @@ function draw() {
   // ctx.fillStyle = pat;
   // ctx.fill();
 
-  ctx.drawImage(img, (questionTrigger.x - viewPort - 40), (canvas.height - questionTrigger.height), 60, 60)
+  ctx.drawImage(img, (questionTrigger.x - viewPort - 40), ((canvas.height - questionTrigger.height) + 140), 60, 60)
 
 
   window.requestAnimationFrame(draw);
