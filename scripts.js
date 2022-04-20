@@ -47,10 +47,19 @@ document.addEventListener('keydown', function(event){
     }
     questionBox.classList.add("hidden")
   } else if (event.keyCode === 50 && !questionBox.classList.contains('hidden')) {
-      
+    if (newQuestion.checkAnswer(listItem2.innerText)) {
+        console.log("Correct")
+    } else {
+        console.log("Incorrect!")
+    }
+    questionBox.classList.add("hidden")    
   } else if (event.keyCode === 51 && !questionBox.classList.contains('hidden')) {
-
-      
+    if (newQuestion.checkAnswer(listItem3.innerText)) {
+        console.log("Correct")
+    } else {
+        console.log("Incorrect!")
+    }
+    questionBox.classList.add("hidden")    
 }
 
 })
