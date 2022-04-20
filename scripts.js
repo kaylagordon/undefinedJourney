@@ -30,12 +30,7 @@ document.addEventListener('keydown', function(event){
     if (characterCoordinate <= (canvas.width/2)) {
       characterCoordinate += stepLength;
     } else if (totalPath === (questionTrigger.x - character.width)) {
-      newQuestion.createQuestion()
-      questionBox.classList.remove('hidden')
-      definition.innerText = newQuestion.definition
-      listItems.forEach((listItem, i) => {
-        listItem.element.innerText = newQuestion.answerChoices[i];
-      })
+      displayQuestion();
     } else {
       viewPort = viewPort + stepLength;
     }
@@ -45,15 +40,28 @@ document.addEventListener('keydown', function(event){
       totalPath -= stepLength;
     }
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
-    const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
-    if (newQuestion.checkAnswer(listItem.innerText)) {
-        console.log("Correct")
-    } else {
-        console.log("Incorrect!")
-    }
-    questionBox.classList.add("hidden")
+    provideFeedback(event);
   }
 })
+
+function displayQuestion() {
+  newQuestion.createQuestion()
+  questionBox.classList.remove('hidden')
+  definition.innerText = newQuestion.definition
+  listItems.forEach((listItem, i) => {
+    listItem.element.innerText = newQuestion.answerChoices[i];
+  })
+}
+
+function provideFeedback(event) {
+  const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
+  if (newQuestion.checkAnswer(listItem.innerText)) {
+      console.log("Correct")
+  } else {
+      console.log("Incorrect!")
+  }
+  questionBox.classList.add("hidden")
+}
 
 function init() {
   window.requestAnimationFrame(draw);
