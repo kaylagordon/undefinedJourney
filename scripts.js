@@ -27,10 +27,7 @@ var newQuestion = new Question();
 
 document.addEventListener('keydown', function(event){
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
-      totalPath += stepLength;
-      console.log("total path", totalPath)
-      console.log("question trigger", questionTrigger.x)
-      console.log("character coordinate", characterCoordinate)
+    totalPath += stepLength;
     if (characterCoordinate <= (canvas.width/2)) {
       characterCoordinate += stepLength;
     } else if (totalPath === (questionTrigger.x - character.width)) {
@@ -45,33 +42,32 @@ document.addEventListener('keydown', function(event){
       viewPort = viewPort + stepLength;
     }
     if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
-        questionTrigger.x += 1000
-        totalPath -= stepLength;
+      questionTrigger.x += 1000
+      totalPath -= stepLength;
     }
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
     const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
     if (newQuestion.checkAnswer(listItem.innerText)) {
-        console.log("Correct")
+      console.log("Correct")
     } else {
-        console.log("Incorrect!")
+      console.log("Incorrect!")
     }
     questionBox.classList.add("hidden")
   } else if (event.keyCode === 50 && !questionBox.classList.contains('hidden')) {
     if (newQuestion.checkAnswer(listItem2.innerText)) {
-        console.log("Correct")
+      console.log("Correct")
     } else {
-        console.log("Incorrect!")
+      console.log("Incorrect!")
     }
     questionBox.classList.add("hidden")
   } else if (event.keyCode === 51 && !questionBox.classList.contains('hidden')) {
     if (newQuestion.checkAnswer(listItem3.innerText)) {
-        console.log("Correct")
+      console.log("Correct")
     } else {
-        console.log("Incorrect!")
+      console.log("Incorrect!")
     }
-    questionBox.classList.add("hidden")
-}
-
+  questionBox.classList.add("hidden")
+  }
 })
 
 function init() {
