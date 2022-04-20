@@ -14,41 +14,75 @@ var listItems = [
 
 init();
 // character
-let character = {height: 100, width: 100}
+let character = {y: 0, height: 100, width: 100}
 
 // questionTrigger
 let questionTrigger = {x: 600, height: 200, width: 20};
 
-let stepLength = 10;
+let stepLength = 5;
 let characterCoordinate = 0;
 let viewPort = 0;
 let totalPath = 0;
+let characterJump = false;
+let jumpCounter = 0;
 var newQuestion = new Question();
 
-document.addEventListener('keydown', function(event){
+let keyStatus = {
+  rightArrow: false,
+}
+
+document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 38) {
+    characterJump = true;
+  }
+
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
-    handleMovement();
+    keyStatus.rightArrow = true;
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
     provideFeedback(event);
   }
-})
+});
+
+document.addEventListener('keyup', function(event) {
+  if (event.keyCode === 39) {
+    keyStatus.rightArrow =  false;
+  }
+});
 
 function handleMovement() {
-  if (characterCoordinate <= (canvas.width/2)) {
-    moveCharacter();
-  } else if (totalPath === (questionTrigger.x - character.width)) {
-    displayQuestion();
-  } else {
-    moveScreen();
-  }
-  totalPath += stepLength;
-  if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
-    resetQuestionTrigger();
+  if (keyStatus.rightArrow === true) {
+    if (characterCoordinate <= (canvas.width/2)) {
+      moveCharacter();
+    } else if (totalPath === (questionTrigger.x - character.width)) {
+      keyStatus.rightArrow = false;
+      displayQuestion();
+    } else {
+      moveScreen();
+    }
+    totalPath += stepLength;
+    if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
+      resetQuestionTrigger();
+    }
   }
 }
 
 function moveCharacter() {
   characterCoordinate += stepLength;
+}
+
+function showJump() {
+  if (characterJump) {
+    if (jumpCounter < 25) {
+      character.y += 10;
+    } else if (jumpCounter >= 25 && jumpCounter < 50) {
+      character.y -= 10;
+    } else {
+      character.y = 0;
+      jumpCounter = 0;
+      characterJump = false;
+    }
+    jumpCounter++;
+  }
 }
 
 function moveScreen() {
@@ -90,10 +124,12 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
 
   ctx.fillStyle = 'green';
-  ctx.fillRect(characterCoordinate, (canvas.height - 110), character.width, character.height);
+  ctx.fillRect(characterCoordinate, (canvas.height - character.y - character.height), character.width, character.height);
 
   ctx.fillStyle = 'red';
   ctx.fillRect((questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.width, questionTrigger.height);
 
+  handleMovement();
+  showJump();
   window.requestAnimationFrame(draw);
 }
