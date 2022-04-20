@@ -71,6 +71,10 @@ function resetQuestionTrigger() {
 }
 
 function displayQuestion() {
+  listItems.forEach(item => {
+    item.element.classList.remove('correct');
+    item.element.classList.remove('wrong');
+  })
   newQuestion.createQuestion();
   questionBox.classList.remove('hidden');
   definition.innerText = newQuestion.definition;
@@ -92,7 +96,25 @@ function provideFeedback(event) {
     }
     checkGameOver();
   }
-  questionBox.classList.add("hidden");
+
+  showCorrectAnswer(listItem.innerText);
+
+  setTimeout(function() {
+    questionBox.classList.add("hidden");
+    questionBox.classList.remove('correct');
+    questionBox.classList.remove('wrong');
+    checkGameOver();
+  }, 1500);
+}
+
+function showCorrectAnswer(guess) {
+  listItems.forEach(item => {
+    if (newQuestion.checkAnswer(item.element.innerText)) {
+      item.element.classList.add('correct');
+    } else if(guess === item.element.innerText) {
+      item.element.classList.add('wrong');
+    }
+  })
 }
 
 function checkGameOver() {

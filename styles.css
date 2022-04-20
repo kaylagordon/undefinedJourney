@@ -1,3 +1,7 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
   text-align: center;
 }
@@ -7,20 +11,56 @@ canvas {
   background-color: #f1f1f1;
 }
 
-.hidden {
-  display: none;
+.question-box,
+.game-over-box {
+  width: 700px;
+  background-color: black;
+  position: absolute;
+  color: white;
 }
 
-.question-box {
-  border: 2px solid;
+li {
+ text-align: left;
 }
 
 main {
   display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 40px;
 }
 
 .score-box,
-.center,
 .strikes-box {
-  width: 33%;
+  width: 25%;
+}
+
+.score-box > h3,
+.strikes-box > h3 {
+  font-size: 30px;
+}
+
+.score-box > p,
+.strikes-box > p {
+  font-size: 20px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.wrong{
+  background-color: red;
+}
+
+.correct {
+  background-color: green;
+}
+
+.hidden {
+  display: none;
 }
