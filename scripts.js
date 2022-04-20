@@ -27,7 +27,6 @@ var newQuestion = new Question();
 
 document.addEventListener('keydown', function(event){
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
-    totalPath += stepLength;
     if (characterCoordinate <= (canvas.width/2)) {
       characterCoordinate += stepLength;
     } else if (totalPath === (questionTrigger.x - character.width)) {
@@ -40,6 +39,7 @@ document.addEventListener('keydown', function(event){
     } else {
       viewPort = viewPort + stepLength;
     }
+    totalPath += stepLength;
     if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
       questionTrigger.x += 1000
       totalPath -= stepLength;
