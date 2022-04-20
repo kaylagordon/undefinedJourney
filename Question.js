@@ -7,7 +7,7 @@ class Question {
 
   createQuestion() {
     const definitionIndex = Math.floor(Math.random() * definitions.length);
-
+    this.answerChoices = [];
     this.definition = definitions[definitionIndex].definition;
     this.correctAnswer = definitions[definitionIndex].word;
     this.answerChoices.push(this.correctAnswer);
