@@ -35,6 +35,7 @@ let jumpCounter = 0;
 var newQuestion = new Question();
 let score = 0;
 let strikes = 0;
+let questionsAnswered = 0;
 
 playAgainButton.addEventListener('click', resetGame);
 
@@ -47,9 +48,10 @@ document.addEventListener('keydown', function(event) {
     characterCanJump = true;
   }
 
-  if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
+  if (event.keyCode === 39 && questionBox.classList.contains('hidden') && gameOverBox.classList.contains('hidden')) {
     keyStatus.rightArrow = true;
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
+    questionsAnswered++;
     provideFeedback(event);
   }
 });
@@ -169,8 +171,8 @@ function showCorrectAnswer(guess) {
 function checkGameOver() {
   if (strikes === 3) {
     gameOverBox.classList.remove('hidden');
-    totalQuestionsCount.innerText = (score / 100) + strikes;
-    percentCorrect.innerText = (score / 100) / ((score / 100) + strikes) * 100;
+    totalQuestionsCount.innerText = questionsAnswered + strikes;
+    percentCorrect.innerText = questionsAnswered / (questionsAnswered + strikes) * 100;
   }
 }
 
