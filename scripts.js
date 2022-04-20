@@ -56,14 +56,17 @@ function moveScreen() {
 }
 
 function resetQuestionTrigger() {
-  questionTrigger.x += 1000
+  let randomNumber = Math.floor(Math.floor(Math.random() * (1200 - canvas.width) + canvas.width))
+  let difference = randomNumber % 10;
+  randomNumber -+ difference;
+  questionTrigger.x += 900;
   totalPath -= stepLength;
 }
 
 function displayQuestion() {
-  newQuestion.createQuestion()
-  questionBox.classList.remove('hidden')
-  definition.innerText = newQuestion.definition
+  newQuestion.createQuestion();
+  questionBox.classList.remove('hidden');
+  definition.innerText = newQuestion.definition;
   listItems.forEach((listItem, i) => {
     listItem.element.innerText = newQuestion.answerChoices[i];
   })
@@ -72,11 +75,11 @@ function displayQuestion() {
 function provideFeedback(event) {
   const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
   if (newQuestion.checkAnswer(listItem.innerText)) {
-      console.log("Correct")
+      console.log("Correct");
   } else {
-      console.log("Incorrect!")
+      console.log("Incorrect!");
   }
-  questionBox.classList.add("hidden")
+  questionBox.classList.add("hidden");
 }
 
 function init() {
