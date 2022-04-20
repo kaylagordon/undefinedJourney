@@ -27,22 +27,38 @@ var newQuestion = new Question();
 
 document.addEventListener('keydown', function(event){
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
-    if (characterCoordinate <= (canvas.width/2)) {
-      characterCoordinate += stepLength;
-    } else if (totalPath === (questionTrigger.x - character.width)) {
-      displayQuestion();
-    } else {
-      viewPort = viewPort + stepLength;
-    }
-    totalPath += stepLength;
-    if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
-      questionTrigger.x += 1000
-      totalPath -= stepLength;
-    }
+    handleMovement();
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
     provideFeedback(event);
   }
 })
+
+function handleMovement() {
+  if (characterCoordinate <= (canvas.width/2)) {
+    moveCharacter();
+  } else if (totalPath === (questionTrigger.x - character.width)) {
+    displayQuestion();
+  } else {
+    moveScreen();
+  }
+  totalPath += stepLength;
+  if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
+    resetQuestionTrigger();
+  }
+}
+
+function moveCharacter() {
+  characterCoordinate += stepLength;
+}
+
+function moveScreen() {
+  viewPort = viewPort + stepLength;
+}
+
+function resetQuestionTrigger() {
+  questionTrigger.x += 1000
+  totalPath -= stepLength;
+}
 
 function displayQuestion() {
   newQuestion.createQuestion()
