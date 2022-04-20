@@ -208,10 +208,6 @@ function draw() {
   ctx.drawImage(questionToon, (questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.height, questionTrigger.height)
   ctx.drawImage(obstacleToon, (obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height)
 
-
-  // ctx.fillStyle = 'black';
-  // ctx.fillRect((obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height);
-
   handleMovement();
   showJump();
   window.requestAnimationFrame(draw);
