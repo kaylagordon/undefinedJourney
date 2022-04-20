@@ -8,6 +8,9 @@
   <title>Undefined Journey</title>
   <meta name="description" content="A simple HTML5 Template for new projects.">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -15,7 +18,7 @@
   <main>
     <div class="score-box">
       <h3>Score:</h3>
-      <p class="score-text"></p>
+      <p class="score-text">0</p>
     </div>
     <div class="center">
       <div class="question-box hidden">
@@ -26,13 +29,18 @@
           <li class="li3"></li>
         </ol>
       </div>
+      <div class="game-over-box hidden">
+        <h2>Game Over</h2>
+        <p>You answered <span class="correct-questions"></span> questions correct with <span class="percent-correct"></span>% accuracy.</p>
+        <button type="button" name="button">Play again!</button>
+      </div>
       <canvas width="700" height="700">
         The game!
       </canvas>
     </div>
     <div class="strikes-box">
       <h3>Strikes:</h3>
-      <p class="strikes-text"></p>
+      <p class="strikes-text">No Strikes</p>
     </div>
     <div>
       <img id="mad-apple" class="hidden-image"src="https://cdn5.vectorstock.com/i/1000x1000/39/89/kawaii-cute-angry-computer-technology-vector-16553989.jpg" />
