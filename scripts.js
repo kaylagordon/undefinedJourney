@@ -6,6 +6,11 @@ var definition = document.querySelector('.definition');
 var listItem1 = document.querySelector('.li1');
 var listItem2 = document.querySelector('.li2');
 var listItem3 = document.querySelector('.li3');
+var listItems = [
+  { element: document.querySelector('.li1'), keyCode: 49 },
+  { element: document.querySelector('.li2'), keyCode: 50 },
+  { element: document.querySelector('.li3'), keyCode: 51 },
+];
 
 init();
 // character
