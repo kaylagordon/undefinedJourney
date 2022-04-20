@@ -202,12 +202,15 @@ function draw() {
 
   var personToon = document.querySelector("#turing-person");
   var questionToon = document.querySelector("#mad-apple");
+  var obstacleToon = document.querySelector("#bomb");
 
   ctx.drawImage(personToon, characterCoordinate, (canvas.height - character.height - character.y) ,character.width, character.height)
   ctx.drawImage(questionToon, (questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.height, questionTrigger.height)
+  ctx.drawImage(obstacleToon, (obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height)
 
-  ctx.fillStyle = 'black';
-  ctx.fillRect((obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height);
+
+  // ctx.fillStyle = 'black';
+  // ctx.fillRect((obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height);
 
   handleMovement();
   showJump();
