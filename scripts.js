@@ -18,45 +18,86 @@ var percentCorrect = document.querySelector('.percent-correct');
 
 init();
 // character
-let character = {height: 100, width: 100}
+let character = {y: 0, height: 100, width: 100}
 
 // questionTrigger
 let questionTrigger = {x: 600, height: 200, width: 20};
 
-let stepLength = 10;
+// obstacle
+let obstacle = {x: 300, height: 50, width: 50};
+
+let stepLength = 5;
 let characterCoordinate = 0;
 let viewPort = 0;
 let totalPath = 0;
+let characterCanJump = false;
+let jumpCounter = 0;
 var newQuestion = new Question();
 let score = 0;
 let strikes = 0;
 
 playAgainButton.addEventListener('click', resetGame);
 
-document.addEventListener('keydown', function(event){
+let keyStatus = {
+  rightArrow: false,
+}
+
+document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 38) {
+    characterCanJump = true;
+  }
+
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
-    handleMovement();
+    keyStatus.rightArrow = true;
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
     provideFeedback(event);
   }
-})
+});
+
+document.addEventListener('keyup', function(event) {
+  if (event.keyCode === 39) {
+    keyStatus.rightArrow =  false;
+  }
+});
 
 function handleMovement() {
-  if (characterCoordinate <= (canvas.width/2)) {
-    moveCharacter();
-  } else if (totalPath === (questionTrigger.x - character.width)) {
-    displayQuestion();
-  } else {
-    moveScreen();
-  }
-  totalPath += stepLength;
-  if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
-    resetQuestionTrigger();
+  if (keyStatus.rightArrow === true) {
+    if (characterCoordinate <= (canvas.width/2)) {
+      moveCharacter();
+    } else if (totalPath === (questionTrigger.x - character.width)) {
+      keyStatus.rightArrow = false;
+      displayQuestion();
+    } else {
+      moveScreen();
+    }
+    checkForObstacleCollision();
+    totalPath += stepLength;
+    if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
+      resetQuestionTrigger();
+    }
+    if (obstacle.x === ((totalPath - stepLength - obstacle.width) - (canvas.width / 2))) {
+      resetObstacle();
+    }
   }
 }
 
 function moveCharacter() {
   characterCoordinate += stepLength;
+}
+
+function showJump() {
+  if (characterCanJump) {
+    if (jumpCounter < 25) {
+      character.y += 12;
+    } else if (jumpCounter >= 25 && jumpCounter < 50) {
+      character.y -= 12;
+    } else {
+      character.y = 0;
+      jumpCounter = 0;
+      characterCanJump = false;
+    }
+    jumpCounter++;
+  }
 }
 
 function moveScreen() {
@@ -65,9 +106,17 @@ function moveScreen() {
 
 function resetQuestionTrigger() {
   let randomNumber = Math.floor(Math.floor(Math.random() * (1200 - canvas.width) + canvas.width))
-  let difference = randomNumber % 10;
-  randomNumber -+ difference;
-  questionTrigger.x += 900;
+  let difference = randomNumber % stepLength;
+  randomNumber -= difference;
+  questionTrigger.x += randomNumber;
+  totalPath -= stepLength;
+}
+
+function resetObstacle() {
+  let randomNumber = Math.floor(Math.floor(Math.random() * (800 - canvas.width) + canvas.width))
+  let difference = randomNumber % stepLength;
+  randomNumber -= difference;
+  obstacle.x += randomNumber;
   totalPath -= stepLength;
 }
 
@@ -137,6 +186,12 @@ function resetGame() {
   scoreText.innerText = 0;
 }
 
+function checkForObstacleCollision() {
+  if (totalPath >= (obstacle.x - character.width) && totalPath <= (obstacle.x + obstacle.width) && character.y < obstacle.height) {
+    console.log('hit obstacle!');
+  }
+}
+
 function init() {
   window.requestAnimationFrame(draw);
 }
@@ -147,8 +202,13 @@ function draw() {
   var personToon = document.querySelector("#turing-person");
   var questionToon = document.querySelector("#mad-apple");
 
-  ctx.drawImage(personToon, characterCoordinate, (canvas.height - 110),character.width, character.height)
+  ctx.drawImage(personToon, characterCoordinate, (canvas.height - character.height - character.y) ,character.width, character.height)
   ctx.drawImage(questionToon, (questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.height, questionTrigger.height)
 
+  ctx.fillStyle = 'black';
+  ctx.fillRect((obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height);
+
+  handleMovement();
+  showJump();
   window.requestAnimationFrame(draw);
 }
