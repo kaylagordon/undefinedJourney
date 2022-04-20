@@ -1,6 +1,7 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+
 var questionBox = document.querySelector('.question-box');
 var definition = document.querySelector('.definition');
 var listItem1 = document.querySelector('.li1');
@@ -92,8 +93,16 @@ function draw() {
   ctx.fillStyle = 'green';
   ctx.fillRect(characterCoordinate, (canvas.height - 110), character.width, character.height);
 
-  ctx.fillStyle = 'red';
-  ctx.fillRect((questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.width, questionTrigger.height);
+  var img = document.querySelector(".mad-apple");
+  var pat = ctx.createPattern(img, "no-repeat");
+  // ctx.rect((questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.width, questionTrigger.height);
+  img.classList.remove("hidden")
+  // ctx.fillStyle = pat;
+  // ctx.fill();
+
+  ctx.drawImage(img, (questionTrigger.x - viewPort - 40), (canvas.height - questionTrigger.height), 60, 60)
+
 
   window.requestAnimationFrame(draw);
 }
+//ctx/draw image
