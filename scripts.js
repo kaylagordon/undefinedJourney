@@ -3,14 +3,13 @@ const ctx = canvas.getContext('2d');
 
 var questionBox = document.querySelector('.question-box');
 var definition = document.querySelector('.definition');
-var listItem1 = document.querySelector('.li1');
-var listItem2 = document.querySelector('.li2');
-var listItem3 = document.querySelector('.li3');
 var listItems = [
   { element: document.querySelector('.li1'), keyCode: 49 },
   { element: document.querySelector('.li2'), keyCode: 50 },
   { element: document.querySelector('.li3'), keyCode: 51 },
 ];
+var strikesText = document.querySelector('.strikes-text');
+var scoreText = document.querySelector('.score-text');
 
 init();
 // character
@@ -24,6 +23,8 @@ let characterCoordinate = 0;
 let viewPort = 0;
 let totalPath = 0;
 var newQuestion = new Question();
+let score = 0;
+let strikes = 0;
 
 document.addEventListener('keydown', function(event){
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
@@ -75,11 +76,39 @@ function displayQuestion() {
 function provideFeedback(event) {
   const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
   if (newQuestion.checkAnswer(listItem.innerText)) {
-      console.log("Correct");
+    score += 100;
+    scoreText.innerText = score;
   } else {
-      console.log("Incorrect!");
+    strikes += 1;
+    strikesText.innerText = '';
+    for (var i = 0; i < strikes; i++) {
+      strikesText.innerText += "X";
+    }
+    checkGameOver();
   }
   questionBox.classList.add("hidden");
+}
+
+function checkGameOver() {
+  if (strikes === 3) {
+    displayGameOverInfo();
+    resetGame();
+  }
+}
+
+function displayGameOverInfo() {
+  console.log("Game over")
+}
+
+function resetGame() {
+  stepLength = 10;
+  characterCoordinate = 0;
+  viewPort = 0;
+  totalPath = 0;
+  score = 0;
+  strikes = 0;
+  strikesText.innerText = 'No Strikes';
+  scoreText.innerText = 0;
 }
 
 function init() {
