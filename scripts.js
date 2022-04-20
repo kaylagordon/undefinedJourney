@@ -1,2 +1,5 @@
-console.log(words);
-console.log(definitions);
+
+let question = new Question();
+question.createQuestion();
+question.shuffleAnswers();
+console.log(question)
