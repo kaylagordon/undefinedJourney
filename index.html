@@ -8,21 +8,45 @@
   <title>Undefined Journey</title>
   <meta name="description" content="A simple HTML5 Template for new projects.">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <h1>Undefined Journey</h1>
-  <div class="question-box hidden">
-    <h2 class="definition"></h2>
-    <ol>
-      <li class="li1"></li>
-      <li class="li2"></li>
-      <li class="li3"></li>
-    </ol>
-  </div>
-  <canvas width="700" height="700">
-    The game!
-  </canvas>
+  <main>
+    <div class="score-box">
+      <h3>Score:</h3>
+      <p class="score-text">0</p>
+    </div>
+    <div class="center">
+      <div class="question-box hidden">
+        <h2 class="definition"></h2>
+        <ol>
+          <li class="li1"></li>
+          <li class="li2"></li>
+          <li class="li3"></li>
+        </ol>
+      </div>
+      <div class="game-over-box hidden">
+        <h2>Game Over</h2>
+        <p>You answered <span class="total-questions"></span> questions with <span class="percent-correct"></span>% accuracy.</p>
+        <button type="button" name="button">Play again!</button>
+      </div>
+      <canvas width="700" height="700">
+        The game!
+      </canvas>
+    </div>
+    <div class="strikes-box">
+      <h3>Strikes:</h3>
+      <p class="strikes-text">No Strikes</p>
+    </div>
+    <div>
+      <img id="mad-apple" class="hidden-image" src="./images/cute-angry-computer-technology-vector-16553989.jpeg" />
+      <img id="turing-person" class="hidden-image" src="https://toppng.com/uploads/preview/stick-figure-png-stick-figure-png-transparent-11562935250atbb6dh8w3.png" />
+    </div>
+  </main>
   <script src="./data.js" charset="utf-8"></script>
   <script src="./Question.js" charset="utf-8"></script>
   <script src="./scripts.js"></script>

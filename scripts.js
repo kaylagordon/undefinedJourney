@@ -1,16 +1,20 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+
 var questionBox = document.querySelector('.question-box');
 var definition = document.querySelector('.definition');
-var listItem1 = document.querySelector('.li1');
-var listItem2 = document.querySelector('.li2');
-var listItem3 = document.querySelector('.li3');
 var listItems = [
   { element: document.querySelector('.li1'), keyCode: 49 },
   { element: document.querySelector('.li2'), keyCode: 50 },
   { element: document.querySelector('.li3'), keyCode: 51 },
 ];
+var strikesText = document.querySelector('.strikes-text');
+var scoreText = document.querySelector('.score-text');
+var playAgainButton = document.querySelector('button');
+var gameOverBox = document.querySelector('.game-over-box');
+var totalQuestionsCount = document.querySelector('.total-questions');
+var percentCorrect = document.querySelector('.percent-correct');
 
 init();
 // character
@@ -29,6 +33,10 @@ let totalPath = 0;
 let characterCanJump = false;
 let jumpCounter = 0;
 var newQuestion = new Question();
+let score = 0;
+let strikes = 0;
+
+playAgainButton.addEventListener('click', resetGame);
 
 let keyStatus = {
   rightArrow: false,
@@ -113,6 +121,10 @@ function resetObstacle() {
 }
 
 function displayQuestion() {
+  listItems.forEach(item => {
+    item.element.classList.remove('correct');
+    item.element.classList.remove('wrong');
+  })
   newQuestion.createQuestion();
   questionBox.classList.remove('hidden');
   definition.innerText = newQuestion.definition;
@@ -124,11 +136,54 @@ function displayQuestion() {
 function provideFeedback(event) {
   const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
   if (newQuestion.checkAnswer(listItem.innerText)) {
-      console.log("Correct");
+    score += 100;
+    scoreText.innerText = score;
   } else {
-      console.log("Incorrect!");
+    strikes += 1;
+    strikesText.innerText = '';
+    for (var i = 0; i < strikes; i++) {
+      strikesText.innerText += "X";
+    }
   }
-  questionBox.classList.add("hidden");
+
+  showCorrectAnswer(listItem.innerText);
+
+  setTimeout(function() {
+    questionBox.classList.add("hidden");
+    questionBox.classList.remove('correct');
+    questionBox.classList.remove('wrong');
+    checkGameOver();
+  }, 1500);
+}
+
+function showCorrectAnswer(guess) {
+  listItems.forEach(item => {
+    if (newQuestion.checkAnswer(item.element.innerText)) {
+      item.element.classList.add('correct');
+    } else if(guess === item.element.innerText) {
+      item.element.classList.add('wrong');
+    }
+  })
+}
+
+function checkGameOver() {
+  if (strikes === 3) {
+    gameOverBox.classList.remove('hidden');
+    totalQuestionsCount.innerText = (score / 100) + strikes;
+    percentCorrect.innerText = (score / 100) / ((score / 100) + strikes) * 100;
+  }
+}
+
+function resetGame() {
+  gameOverBox.classList.add('hidden');
+  stepLength = 10;
+  characterCoordinate = 0;
+  viewPort = 0;
+  totalPath = 0;
+  score = 0;
+  strikes = 0;
+  strikesText.innerText = 'No Strikes';
+  scoreText.innerText = 0;
 }
 
 function checkForObstacleCollision() {
@@ -144,11 +199,11 @@ function init() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
 
-  ctx.fillStyle = 'green';
-  ctx.fillRect(characterCoordinate, (canvas.height - character.y - character.height), character.width, character.height);
+  var personToon = document.querySelector("#turing-person");
+  var questionToon = document.querySelector("#mad-apple");
 
-  ctx.fillStyle = 'red';
-  ctx.fillRect((questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.width, questionTrigger.height);
+  ctx.drawImage(personToon, characterCoordinate, (canvas.height - character.height - character.y) ,character.width, character.height)
+  ctx.drawImage(questionToon, (questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.height, questionTrigger.height)
 
   ctx.fillStyle = 'black';
   ctx.fillRect((obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height);
