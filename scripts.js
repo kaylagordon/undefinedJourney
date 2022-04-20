@@ -19,6 +19,9 @@ let character = {y: 0, height: 100, width: 100}
 // questionTrigger
 let questionTrigger = {x: 600, height: 200, width: 20};
 
+// obstacle
+let obstacle = {x: 300, height: 50, width: 50};
+
 let stepLength = 5;
 let characterCoordinate = 0;
 let viewPort = 0;
@@ -59,6 +62,7 @@ function handleMovement() {
     } else {
       moveScreen();
     }
+    checkForObstacleCollision();
     totalPath += stepLength;
     if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
       resetQuestionTrigger();
@@ -116,6 +120,12 @@ function provideFeedback(event) {
   questionBox.classList.add("hidden");
 }
 
+function checkForObstacleCollision() {
+  if (totalPath >= (obstacle.x - character.width) && totalPath <= (obstacle.x + obstacle.width) && character.y < obstacle.height) {
+    console.log('hit obstacle!');
+  }
+}
+
 function init() {
   window.requestAnimationFrame(draw);
 }
@@ -128,6 +138,9 @@ function draw() {
 
   ctx.fillStyle = 'red';
   ctx.fillRect((questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.width, questionTrigger.height);
+
+  ctx.fillStyle = 'black';
+  ctx.fillRect((obstacle.x - viewPort), (canvas.height - obstacle.height), obstacle.width, obstacle.height);
 
   handleMovement();
   showJump();
