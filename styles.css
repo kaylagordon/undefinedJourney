@@ -14,3 +14,13 @@ canvas {
 .question-box {
   border: 2px solid;
 }
+
+main {
+  display: flex;
+}
+
+.score-box,
+.center,
+.strikes-box {
+  width: 33%;
+}

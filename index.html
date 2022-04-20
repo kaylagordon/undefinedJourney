@@ -12,17 +12,29 @@
 
 <body>
   <h1>Undefined Journey</h1>
-  <div class="question-box hidden">
-    <h2 class="definition"></h2>
-    <ol>
-      <li class="li1"></li>
-      <li class="li2"></li>
-      <li class="li3"></li>
-    </ol>
-  </div>
-  <canvas width="700" height="700">
-    The game!
-  </canvas>
+  <main>
+    <div class="score-box">
+      <h3>Score:</h3>
+      <p class="score-text"></p>
+    </div>
+    <div class="center">
+      <div class="question-box hidden">
+        <h2 class="definition"></h2>
+        <ol>
+          <li class="li1"></li>
+          <li class="li2"></li>
+          <li class="li3"></li>
+        </ol>
+      </div>
+      <canvas width="700" height="700">
+        The game!
+      </canvas>
+    </div>
+    <div class="strikes-box">
+      <h3>Strikes:</h3>
+      <p class="strikes-text"></p>
+    </div>
+  </main>
   <script src="./data.js" charset="utf-8"></script>
   <script src="./Question.js" charset="utf-8"></script>
   <script src="./scripts.js"></script>
