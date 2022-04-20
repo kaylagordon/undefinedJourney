@@ -91,22 +91,10 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
 
   var personToon = document.querySelector("#turing-person");
-  ctx.drawImage(personToon, characterCoordinate, (canvas.height - 110),character.width, character.height)
-
-
-  // ctx.fillStyle = 'green';
-  // ctx.fillRect(characterCoordinate, (canvas.height - 110), character.width, character.height);
-
   var questionToon = document.querySelector("#mad-apple");
-  // var pat = ctx.createPattern(img, "no-repeat");
-  // ctx.rect((questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.width, questionTrigger.height);
- 
-  // ctx.fillStyle = pat;
-  // ctx.fill();
 
+  ctx.drawImage(personToon, characterCoordinate, (canvas.height - 110),character.width, character.height)
   ctx.drawImage(questionToon, (questionTrigger.x - viewPort), (canvas.height - questionTrigger.height), questionTrigger.height, questionTrigger.height)
-
 
   window.requestAnimationFrame(draw);
 }
-//ctx/draw image
