@@ -10,6 +10,10 @@ var listItems = [
 ];
 var strikesText = document.querySelector('.strikes-text');
 var scoreText = document.querySelector('.score-text');
+var playAgainButton = document.querySelector('button');
+var gameOverBox = document.querySelector('.game-over-box');
+var correctQuestionsCount = document.querySelector('.correct-questions');
+var percentCorrect = document.querySelector('.percent-correct');
 
 init();
 // character
@@ -25,6 +29,8 @@ let totalPath = 0;
 var newQuestion = new Question();
 let score = 0;
 let strikes = 0;
+
+playAgainButton.addEventListener('click', resetGame);
 
 document.addEventListener('keydown', function(event){
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
@@ -91,16 +97,14 @@ function provideFeedback(event) {
 
 function checkGameOver() {
   if (strikes === 3) {
-    displayGameOverInfo();
-    resetGame();
+    gameOverBox.classList.remove('hidden');
+    correctQuestionsCount.innerText = score / 100;
+    percentCorrect.innerText = (score / 100) / ((score / 100) + strikes) * 100;
   }
 }
 
-function displayGameOverInfo() {
-  console.log("Game over")
-}
-
 function resetGame() {
+  gameOverBox.classList.add('hidden');
   stepLength = 10;
   characterCoordinate = 0;
   viewPort = 0;
