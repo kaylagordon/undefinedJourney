@@ -67,6 +67,9 @@ function handleMovement() {
     if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
       resetQuestionTrigger();
     }
+    if (obstacle.x === ((totalPath - stepLength - obstacle.width) - (canvas.width / 2))) {
+      resetObstacle();
+    }
   }
 }
 
@@ -77,9 +80,9 @@ function moveCharacter() {
 function showJump() {
   if (characterCanJump) {
     if (jumpCounter < 25) {
-      character.y += 10;
+      character.y += 12;
     } else if (jumpCounter >= 25 && jumpCounter < 50) {
-      character.y -= 10;
+      character.y -= 12;
     } else {
       character.y = 0;
       jumpCounter = 0;
@@ -95,9 +98,17 @@ function moveScreen() {
 
 function resetQuestionTrigger() {
   let randomNumber = Math.floor(Math.floor(Math.random() * (1200 - canvas.width) + canvas.width))
-  let difference = randomNumber % 10;
-  randomNumber -+ difference;
-  questionTrigger.x += 900;
+  let difference = randomNumber % stepLength;
+  randomNumber -= difference;
+  questionTrigger.x += randomNumber;
+  totalPath -= stepLength;
+}
+
+function resetObstacle() {
+  let randomNumber = Math.floor(Math.floor(Math.random() * (800 - canvas.width) + canvas.width))
+  let difference = randomNumber % stepLength;
+  randomNumber -= difference;
+  obstacle.x += randomNumber;
   totalPath -= stepLength;
 }
 
