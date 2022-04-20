@@ -13,7 +13,7 @@ var strikesText = document.querySelector('.strikes-text');
 var scoreText = document.querySelector('.score-text');
 var playAgainButton = document.querySelector('button');
 var gameOverBox = document.querySelector('.game-over-box');
-var correctQuestionsCount = document.querySelector('.correct-questions');
+var totalQuestionsCount = document.querySelector('.total-questions');
 var percentCorrect = document.querySelector('.percent-correct');
 
 init();
@@ -95,7 +95,6 @@ function provideFeedback(event) {
     for (var i = 0; i < strikes; i++) {
       strikesText.innerText += "X";
     }
-    checkGameOver();
   }
 
   showCorrectAnswer(listItem.innerText);
@@ -121,7 +120,7 @@ function showCorrectAnswer(guess) {
 function checkGameOver() {
   if (strikes === 3) {
     gameOverBox.classList.remove('hidden');
-    correctQuestionsCount.innerText = score / 100;
+    totalQuestionsCount.innerText = (score / 100) + strikes;
     percentCorrect.innerText = (score / 100) / ((score / 100) + strikes) * 100;
   }
 }
