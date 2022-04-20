@@ -25,8 +25,9 @@ main {
   width: 33%;
 }
 
-.mad-apple {
+.hidden-image {
   /* background-image: url("https://cdn5.vectorstock.com/i/1000x1000/39/89/kawaii-cute-angry-computer-technology-vector-16553989.jpg"); */
+  display: none;
   background-repeat: no-repeat;
   width: 10px;
   height: 20px;
