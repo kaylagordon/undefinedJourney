@@ -23,7 +23,7 @@ let stepLength = 5;
 let characterCoordinate = 0;
 let viewPort = 0;
 let totalPath = 0;
-let characterJump = false;
+let characterCanJump = false;
 let jumpCounter = 0;
 var newQuestion = new Question();
 
@@ -33,7 +33,7 @@ let keyStatus = {
 
 document.addEventListener('keydown', function(event) {
   if (event.keyCode === 38) {
-    characterJump = true;
+    characterCanJump = true;
   }
 
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
@@ -71,7 +71,7 @@ function moveCharacter() {
 }
 
 function showJump() {
-  if (characterJump) {
+  if (characterCanJump) {
     if (jumpCounter < 25) {
       character.y += 10;
     } else if (jumpCounter >= 25 && jumpCounter < 50) {
@@ -79,7 +79,7 @@ function showJump() {
     } else {
       character.y = 0;
       jumpCounter = 0;
-      characterJump = false;
+      characterCanJump = false;
     }
     jumpCounter++;
   }
