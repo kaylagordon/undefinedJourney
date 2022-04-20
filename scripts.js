@@ -6,7 +6,11 @@ var definition = document.querySelector('.definition');
 var listItem1 = document.querySelector('.li1');
 var listItem2 = document.querySelector('.li2');
 var listItem3 = document.querySelector('.li3');
-
+var listItems = [
+  { element: document.querySelector('.li1'), keyCode: 49 },
+  { element: document.querySelector('.li2'), keyCode: 50 },
+  { element: document.querySelector('.li3'), keyCode: 51 },
+];
 
 
 
@@ -21,7 +25,7 @@ let stepLength = 10;
 let characterCoordinate = 0;
 let viewPort = 0;
 let totalPath = 0;
-var newQuestion;
+var newQuestion = new Question();
 
 document.addEventListener('keydown', function(event){
   if (event.keyCode === 39 && questionBox.classList.contains('hidden')) {
@@ -29,52 +33,30 @@ document.addEventListener('keydown', function(event){
     if (characterCoordinate <= (canvas.width/2)) {
       characterCoordinate = characterCoordinate + stepLength;
     } else if (totalPath === (questionTrigger.x - character.width + stepLength)) {
-        console.log("stepLength", stepLength)
-        console.log("total path", totalPath)
-        console.log("question trigger", questionTrigger.x)
-      newQuestion = new Question();
       newQuestion.createQuestion()
       questionBox.classList.remove('hidden')
       definition.innerText = newQuestion.definition
-      listItem1.innerText = newQuestion.answerChoices[0]
-      listItem2.innerText = newQuestion.answerChoices[1]
-      listItem3.innerText = newQuestion.answerChoices[2]
+      listItems.forEach((listItem, i) => {
+        listItem.element.innerText = newQuestion.answerChoices[i];
+      })
     } else {
       viewPort = viewPort + stepLength;
     }
     if (questionTrigger.x === ((totalPath - stepLength - questionTrigger.width) - (canvas.width / 2))) {
-        questionTrigger.x += 1000 
-        
+        questionTrigger.x += 1000
+
     }
-  } else if (event.keyCode === 49 && !questionBox.classList.contains('hidden')) {
-    if (newQuestion.checkAnswer(listItem1.innerText)) {
+  } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
+    const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
+    if (newQuestion.checkAnswer(listItem.innerText)) {
         console.log("Correct")
     } else {
         console.log("Incorrect!")
     }
     questionBox.classList.add("hidden")
-  } else if (event.keyCode === 50 && !questionBox.classList.contains('hidden')) {
-    if (newQuestion.checkAnswer(listItem2.innerText)) {
-        console.log("Correct")
-    } else {
-        console.log("Incorrect!")
-    }
-    questionBox.classList.add("hidden")    
-  } else if (event.keyCode === 51 && !questionBox.classList.contains('hidden')) {
-    if (newQuestion.checkAnswer(listItem3.innerText)) {
-        console.log("Correct")
-    } else {
-        console.log("Incorrect!")
-    }
-    questionBox.classList.add("hidden")    
-}
-
+  }
 })
 
-
-
-//console log the question
-// 
 
 function init() {
   window.requestAnimationFrame(draw);
