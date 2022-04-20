@@ -24,7 +24,7 @@ let character = {y: 0, height: 100, width: 100}
 let questionTrigger = {x: 600, height: 200, width: 20};
 
 // obstacle
-let obstacle = {x: 300, height: 50, width: 50};
+let obstacle = {x: 1000, height: 50, width: 50};
 
 let stepLength = 5;
 let characterCoordinate = 0;
@@ -188,7 +188,8 @@ function resetGame() {
 
 function checkForObstacleCollision() {
   if (totalPath >= (obstacle.x - character.width) && totalPath <= (obstacle.x + obstacle.width) && character.y < obstacle.height) {
-    console.log('hit obstacle!');
+    score--;
+    scoreText.innerText = score;
   }
 }
 
