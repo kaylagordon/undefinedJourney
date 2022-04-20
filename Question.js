@@ -18,6 +18,8 @@ class Question {
         this.answerChoices.push(words[wordIndex])
       }
     }
+
+    this.shuffleAnswers();
   }
 
   shuffleAnswers() {

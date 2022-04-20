@@ -31,7 +31,6 @@ document.addEventListener('keydown', function(event){
     if (characterCoordinate <= (canvas.width/2)) {
       characterCoordinate += stepLength;
     } else if (totalPath === (questionTrigger.x - character.width)) {
-      newQuestion = new Question();
       newQuestion.createQuestion()
       questionBox.classList.remove('hidden')
       definition.innerText = newQuestion.definition
@@ -48,25 +47,11 @@ document.addEventListener('keydown', function(event){
   } else if ((event.keyCode === 49 || event.keyCode === 50 || event.keyCode === 51) && !questionBox.classList.contains('hidden')) {
     const listItem = listItems.find(item => item.keyCode === event.keyCode).element;
     if (newQuestion.checkAnswer(listItem.innerText)) {
-      console.log("Correct")
+        console.log("Correct")
     } else {
-      console.log("Incorrect!")
+        console.log("Incorrect!")
     }
     questionBox.classList.add("hidden")
-  } else if (event.keyCode === 50 && !questionBox.classList.contains('hidden')) {
-    if (newQuestion.checkAnswer(listItem2.innerText)) {
-      console.log("Correct")
-    } else {
-      console.log("Incorrect!")
-    }
-    questionBox.classList.add("hidden")
-  } else if (event.keyCode === 51 && !questionBox.classList.contains('hidden')) {
-    if (newQuestion.checkAnswer(listItem3.innerText)) {
-      console.log("Correct")
-    } else {
-      console.log("Incorrect!")
-    }
-  questionBox.classList.add("hidden")
   }
 })
 
